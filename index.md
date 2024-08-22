@@ -270,7 +270,7 @@ Using project "default" on server "https://api.xxx.yyy.ibm.com:6443".
 ```
 
 
-# 4. Installing CP4D 5.0.1 platform and IKC service
+# 4. Installing CP4D 5.0.1 platform and DPH service
 
 ### Step 4.1 - Open a screen session.
 This will allow your to reconnect to your terminal via screen -r if ever you loose the SSH connection to the bastion.
@@ -388,7 +388,12 @@ operand-deployment-lifecycle-manager-85778b44f7-mhz4s             1/1     Runnin
 ### Step 4.7 - Install the operators for cpd_platform and your CPD services
 Run the apply-olm command to install the operators of cpd_platform service and all the CPD services that you have specified in the COMPONENTS environments variable.
 ```
-./cpd-cli manage apply-olm --release=${VERSION} --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} --components=cpd_platform,${COMPONENTS}
+./cpd-cli manage apply-olm \
+--release=${VERSION} \
+--cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
+--components=cpd_platform,${COMPONENTS} \
+--case_download=true \
+--from_oci=true
 ```
 
 Output:
