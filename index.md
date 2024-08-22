@@ -1,4 +1,4 @@
-# Installing CP4D 5.0.1 and IBM Knowlegde Catalog (IKC) service on Single Node OpenShift (SNO) 4.15 cluster
+# Installing CP4D 5.0.1 and IBM Knowledge Catalog (IKC) service on Single Node OpenShift (SNO) 4.15 cluster
 
 # 1. Provisioning a OCP SNO 4.15 cluster
 You would need at least 32 vCPU, 128 GB RAM and 300 GB disk for the OCP 4.15 SNO cluster.
