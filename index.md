@@ -283,6 +283,16 @@ Using project "default" on server "https://api.xxx.yyy.ibm.com:6443".
 [SUCCESS] 2024-07-03T09:41:31.665924Z The login-to-ocp command ran successfully.
 ```
 
+### Step 3.4 - Setup NFS provisioner (optional)
+```
+./cpd-cli manage setup-nfs-provisioner \
+--nfs_server=${NFS_SERVER_LOCATION} \
+--nfs_path=${NFS_PATH} \
+--nfs_provisioner_ns=${PROJECT_NFS_PROVISIONER} \
+--nfs_storageclass_name=${NFS_STORAGE_CLASS} \
+--nfs_provisioner_image=${NFS_IMAGE}
+```
+
 
 # 4. Installing CP4D 5.0.1 platform and DPH service
 
