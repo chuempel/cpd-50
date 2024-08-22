@@ -50,7 +50,7 @@ rm -f cpd-cli-linux-EE-14.0.1.tgz
 - your [IBM entitlement API key for Cloud Pak for Data](https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=information-obtaining-your-entitlement-api-key)
 - the API host, extracted from the API URL via command 
 ```
-export SNO_API_URL=<replace with the value of API URL from the TechZone Reservation details and remove /-sign at the end of the URL if present>
+export SNO_API_URL=<replace with the value of API URL from OCP cluster connection details and remove /-sign at the end of the URL if present>
 export SNO_CLUSTER_ADMIN_PWD=<replace with the value of Cluster Admin Password from the TechZone Reservation details>
 export SNO_IBM_ENTITLEMENT_KEY=<replace with the value of your IBM Entitlement API key>
 export SNO_API_HOST=$(echo $SNO_API_URL | sed 's/https:\/\///g' | sed 's/:6443//g')
