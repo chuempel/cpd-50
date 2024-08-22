@@ -401,7 +401,7 @@ Output:
 [SUCCESS] 2024-07-04T07:08:18.907001Z The apply-olm command ran successfully.
 ```
 
-Verify that all the pods in cpd-operators namespace are running. You will see that many more appear, as we have selected to install the WKC service.
+Verify that all the pods in cpd-operators namespace are running. You will see that many more appear, as we have selected to install the DPH service.
 ```
 oc get pods -n ${PROJECT_CPD_INST_OPERATORS}
 ```
@@ -452,7 +452,7 @@ operand-deployment-lifecycle-manager-85778b44f7-9hkvg             1/1     Runnin
 ```
 
 ### Step 4.8 - Install the CPD platform by running the apply-cr command.
-Note, that this command eventually takes 2 hours to complete due to the large number of services that will be installed when installing WKC.
+Note, that this command eventually takes 2 hours to complete due to the large number of services that will be installed when installing DPH.
 ```
 ./cpd-cli manage apply-cr \
 --release=${VERSION} \
@@ -526,8 +526,8 @@ zen-watchdog-pre-requisite-job-llzt7                 0/1     Completed   0      
 zen-watcher-7984fd87d4-zmq2j                         2/2     Running     0          7h4m
 ```
 
-### Step 4.9 - Install the IKC service by running the apply-cr command.
-Note, that this command eventually takes 2 hours to complete due to the large number of services that will be installed when installing WKC.
+### Step 4.9 - Install the DPH service by running the apply-cr command.
+Note, that this command eventually takes 2 hours to complete due to the large number of services that will be installed when installing DPH.
 ```
 ./cpd-cli manage apply-cr \
 --release=${VERSION} \
@@ -583,12 +583,12 @@ dsx-requisite-pre-install-job-tjck7                               0/1     Comple
 [...]
 ```
 
-Output (after WKC installation completed):
+Output (after DPH installation completed):
 ```
 [SUCCESS] 2024-07-04T16:15:13.927437Z The apply-cr command ran successfully.
 ```
 
-Footprint after WKC installation:
+Footprint after DPH installation:
 ```
 oc describe nodes | grep -e "cpu  " -e "memory  "
 ```
@@ -799,30 +799,6 @@ oc describe nodes | grep -e "cpu  " -e "memory  "
 ### Step 5.4 - Logging in to the SNO node
 ```
 oc debug node/master-1
-```
-
-### Step 5.5 - Enabling optional WKC features
-This will enable the Knowledge Graph, Data Quality and MANTA services in the WKC instance.
-```
-./cpd-cli manage update-cr \
---component=wkc \
---cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
---patch="{\"enableKnowledgeGraph\":True,\"enableDataQuality\":True,\"enableMANTA\":True}"
-```
-
-Output:
-```
-[SUCCESS] 2023-07-09T14:46:37.122056Z The update-cr command ran successfully.
-```
-
-### Step 5.6 - Enable Watson NLP
-```
-oc patch -n ${PROJECT_CPD_INST_OPERANDS} NotebookRuntime ibm-cpd-ws-runtime-231-py --type=merge --patch '{"spec":{"install_nlp_models":true}}'
-```
-
-Verify Watson NLP.
-```
-oc get -n ${PROJECT_CPD_INST_OPERANDS} NotebookRuntime -o custom-columns=NAME:metadata.name,NLP:spec.install_nlp_models,STATUS:status.runtimeStatus
 ```
 
 # 6. Troubleshooting
