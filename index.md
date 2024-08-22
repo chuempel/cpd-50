@@ -187,11 +187,14 @@ export PROJECT_CPD_INST_OPERANDS="cpd-instance"
 # ------------------------------------------------------------------------------
 # Set NFS_SERVER_LOCATION environment variable to the IP address or fully qualified domain name (FQDN) of the NFS server:
 export NFS_SERVER_LOCATION=<server-address>
+
 # Set NFS_PATH environment variable to the exported path where you want the provisioner to create sub-directories.
 # (The default path is /.)
 export NFS_PATH=<path>
+
 export PROJECT_NFS_PROVISIONER=nfs-provisioner
 export NFS_STORAGE_CLASS=managed-nfs-storage
+export NFS_IMAGE=registry.k8s.io/sig-storage/nfs-subdir-external-provisioner:v4.0.2
 
 # ------------------------------------------------------------------------------
 # Storage
