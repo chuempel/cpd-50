@@ -354,7 +354,9 @@ Output:
 --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
 --block_storage_class=${STG_CLASS_BLOCK} \
---license_acceptance=true
+--license_acceptance=true \
+--case_download=true \
+--from_oci=true
 ```
 
 Output:
