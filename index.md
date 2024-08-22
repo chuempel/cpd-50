@@ -304,7 +304,9 @@ This will install the cert manager and licensing services.
 --release=${VERSION} \
 --license_acceptance=true \
 --cert_manager_ns=${PROJECT_CERT_MANAGER} \
---licensing_ns=${PROJECT_LICENSE_SERVICE}
+--licensing_ns=${PROJECT_LICENSE_SERVICE} \
+--case_download=true \
+--from_oci=true
 ```
 
 Output:
