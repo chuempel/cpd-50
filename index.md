@@ -320,6 +320,11 @@ Output:
 [SUCCESS] 2024-07-03T09:49:25.876626Z The add-icr-cred-to-global-pull-secret command ran successfully.
 ```
 
+### Step 4.3.1 - Check connectivity to IBM Container registry
+```
+./cpd-cli manage login-entitled-registry ${IBM_ENTITLEMENT_KEY}
+```
+
 ### Step 4.4.1 - Install the shared cluster components
 This will install the cert manager and licensing services.
 ```
