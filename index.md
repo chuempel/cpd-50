@@ -285,6 +285,10 @@ Using project "default" on server "https://api.xxx.yyy.ibm.com:6443".
 
 ### Step 3.4 - Setup NFS provisioner (optional)
 ```
+oc new-project ${PROJECT_NFS_PROVISIONER}
+```
+
+```
 ./cpd-cli manage setup-nfs-provisioner \
 --nfs_server=${NFS_SERVER_LOCATION} \
 --nfs_path=${NFS_PATH} \
