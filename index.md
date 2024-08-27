@@ -956,6 +956,25 @@ spec:
  oc get route minio -n velero
  ```
 
+## 8. Storage validation
+Perform a health check on storage validation.
+
+The cpd-cli health storage-validation command uses the Storage Validation tool for IBM Cloud Paks to validate storage on ReadWriteOnce and ReadWriteMany volumes on a Red Hat® OpenShift® cluster.
+
+The storage-validation command performs the following health checks:
+- Dynamic provisioning of a volume
+- Mounting volume from a node
+- Sequential read/write consistency from single and multiple nodes
+- Parallel read/write consistency from single and multiple nodes
+- Parallel read/write consistency across multiple threads
+- File permissions on mounted volumes
+- Accessibility based on POSIX compliance group ID permissions
+- SubPath test for volumes
+- File locking test
+
+References:
+- https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=health-storage-validation
+- https://github.com/IBM/k8s-storage-tests
 
 
 # END OF DOCUMENT
