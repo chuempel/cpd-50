@@ -976,6 +976,12 @@ References:
 - https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=health-storage-validation
 - https://github.com/IBM/k8s-storage-tests
 
+### 8.1 Run the storage validation command
+```
+cpd-cli health storage-validation \
+--param param.yml
+```  
+
 
 # END OF DOCUMENT
 
