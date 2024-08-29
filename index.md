@@ -1,4 +1,4 @@
-# Installing CP4D 5.0.1 and the IBM Data Product Hub (DPH) service on a Single Node OpenShift (SNO) 4.15 cluster
+# Installing CP4D 5.0.1 and the IBM Data Product Hub (DPH) service on an OpenShift 4.15 cluster
 
 # 1. Provisioning a OCP SNO 4.15 cluster
 You would need at least 32 vCPU, 128 GB RAM and 300 GB disk for the OCP 4.15 SNO cluster.
@@ -852,91 +852,140 @@ sudo su -
 shutdown -Fr now
 ```
 
-# 7. Setting up Minio S3 on SNO
-This explains how to setup a Minio S3 cluster on the SNO node.
+# 7. Setting up Minio S3
+This explains how to setup a Minio S3 cluster on the OCP cluster.
 
 Assumes that:
 - you are logged in as kubeadmin to your OpenShift cluster
 - you can pull images from Dockerhub
 - you have a storage class nfs-storage-provisioner
 
-### Step 7.1 - Download Velero archive
-```
-wget https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz
-```
+## Step 7.1 Sample Object Store using MinIO
 
-### Step 7.2 - Extract Velero archive
-```
-tar xvzf velero-v1.6.0-linux-amd64.tar.gz
-mv velero-v1.6.0-linux-amd64/* .
-rm -rf velero-v1.6.0-linux-amd64
-rm -rf velero-v1.6.0-linux-amd64.tar.gz
-```
+For testing purposes, steps are shown to install a local MinIO server, which is an
+open-source object store.
 
-### Step 7.3 - Create Minio deployment
-```
-oc apply -f examples/minio/00-minio-deployment.yaml
-```
+### Step 7.2 Example using NFS storage class:
+1.  ```wget https://github.com/vmware-tanzu/velero/releases/download/v1.6.0/velero-v1.6.0-linux-amd64.tar.gz```
+2.  ```tar xvfz velero-v1.6.0-linux-amd64.tar.gz```
+3.  From the extracted velero folder, run the following. This creates a
+    sample MinIO deployment in the "velero" namespace.
+    ```
+    oc apply -f examples/minio/00-minio-deployment.yaml
+    ```
+    MinIO pulls images from docker.io. docker.io is subject to rate limiting.
+    
+    minio pods may fail with error:
+    ```
+    toomanyrequests: You have reached your pull rate limit. You may increase the limit by authenticating and upgrading: https://www.docker.com/increase-rate-limit
+    ```
 
-### Step 7.4 - Patch Minio image
-```
-oc set image deployment/minio minio=minio/minio:RELEASE.2021-04-22T15-44-28Z -n velero
-```
+    If this occurs, try the following:
 
-### Step 7.5 - Create PVCs for Minio and modify the Minio deployment
-Create the following PersitentVolumeClaim and save the YAML in the minio-config-pvc.yaml file
-```
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  namespace: velero
-  name: minio-config-pvc
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: nfs-storage-provisioner
- ```
- 
-Create another PersistentVolumeClaim and save the YAML in the minio-storage-pvc.yaml file
-```
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  namespace: velero
-  name: minio-storage-pvc
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 400Gi
-  storageClassName: nfs-storage-provisioner
-```
+    1.  Create a docker account and login
 
-Apply the two YAML files and modify the Minio deployment, so that the new PVCs are taken into account
-```
-oc apply -f minio-config-pvc.yaml
-oc apply -f minio-storage-pvc.yaml
-oc set volume deployment.apps/minio --add --overwrite --name=config --mount-path=/config --type=persistentVolumeClaim --claim-name="minio-config-pvc" -n velero
-oc set volume deployment.apps/minio --add --overwrite --name=storage --mount-path=/storage --type=persistentVolumeClaim --claim-name="minio-storage-pvc" -n velero
-```
+    2.  Obtain an access token from
+        <https://hub.docker.com/settings/security>
 
-### Step 7.6 - Set Minio resource limits
-Set resouce limits for Minio
-```
-oc set resources deployment minio -n velero --requests=cpu=500m,memory=256Mi --limits=cpu=1,memory=1Gi
-```
+    3.  Create a docker pull secret.  Substitute 'myuser' and 'myaccesstoken' with the docker account user and token.
+        ```
+        oc create secret docker-registry --docker-server=docker.io --docker-username=myuser --docker-password=myaccesstoken -n velero dockerpullsecret
+        ```
+    4.  Add the image pull secret to the 'default' service account
+        ```
+        oc secrets link default dockerpullsecret --for=pull -n velero
+        ```
 
-### Step 7.7 - Expose Minio service
-Expore Minio service
-```
-oc expose svc minio -n velero
-```
+    5.  Restart the minio pods
 
-### Step 7.8 - Create Ingress for Minio
+### Step 7.3 Update the image used by the minio pod
+   ```
+   oc set image deployment/minio minio=minio/minio:RELEASE.2021-04-22T15-44-28Z -n velero
+   ```
+
+### Step 7.4 Creating PVCs for MinIO
+Create two persistent volumes and update the deployment. Change the storage class and size as needed.
+
+    1.  Create config PVC
+
+        ```
+        oc apply -f minio-config-pvc.yaml
+        ```
+        ```
+        apiVersion: v1
+        kind: PersistentVolumeClaim
+        metadata:
+          namespace: velero
+          name: minio-config-pvc
+        spec:
+          accessModes:
+            - ReadWriteMany
+          resources:
+            requests:
+              storage: 1Gi
+          storageClassName: managed-nfs-storage
+        ```
+    2.  Create storage PVC
+
+        ```
+        oc apply -f minio-storage-pvc.yaml
+        ```
+        ```
+        apiVersion: v1
+        kind: PersistentVolumeClaim
+        metadata:
+          namespace: velero
+          name: minio-storage-pvc
+        spec:
+          accessModes:
+            - ReadWriteMany
+          resources:
+            requests:
+              storage: 400Gi
+          storageClassName: managed-nfs-storage
+        ```
+
+    3.  Set config volume
+        ```
+        oc set volume deployment.apps/minio --add --overwrite --name=config --mount-path=/config \
+          --type=persistentVolumeClaim --claim-name="minio-config-pvc" -n velero
+        ```
+    
+    4.  Set storage volume
+        ```
+        oc set volume deployment.apps/minio --add --overwrite --name=storage --mount-path=/storage \
+          --type=persistentVolumeClaim --claim-name="minio-storage-pvc" -n velero
+        ```
+
+## Step 7.5 Set resource limits for the minio deployment.
+    ```
+    oc set resources deployment minio -n velero --requests=cpu=500m,memory=256Mi --limits=cpu=1,memory=1Gi
+    ```
+
+### Step 7.6 Check that the MinIO pods are up and running.
+    ```
+    oc get pods -n velero
+    ```
+### Step 7.7 Expose the minio service
+    ```
+    oc expose svc minio -n velero
+    ```
+## Step 7.8 Get the MinIO URL
+    ```
+    oc get route minio -n velero
+    ```
+    Example:
+
+    http://minio-velero.apps.mycluster.cp.fyre.ibm.com
+
+    User/password
+
+    minio/minio123
+
+### Step 7.9 Go to the MinIO web UI and create a bucket called "velero"
+
+
+### Step 7.xx - Create Ingress for Minio
 Create the following Ingress and save the YAML in the minio-ingress.yaml file
 ```
 apiVersion: networking.k8s.io/v1
@@ -963,11 +1012,7 @@ spec:
  oc apply -f minio-ingress.yaml
  ```
  
- ### Step 7.9 - Get the Minio URL
- ```
- oc get route minio -n velero
- ```
-
+ 
 ## 8. Storage validation
 Perform a health check on storage validation.
 
