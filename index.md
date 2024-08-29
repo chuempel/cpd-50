@@ -1013,7 +1013,7 @@ spec:
  ```
  
  
-## 8. Storage validation
+# 8. Storage validation
 Perform a health check on storage validation.
 
 The cpd-cli health storage-validation command uses the Storage Validation tool for IBM Cloud Paks to validate storage on ReadWriteOnce and ReadWriteMany volumes on a Red Hat® OpenShift® cluster.
