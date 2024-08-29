@@ -970,7 +970,7 @@ Create two persistent volumes and update the deployment. Change the storage clas
     ```
     oc expose svc minio -n velero
     ```
-## Step 7.8 Get the MinIO URL
+### Step 7.8 Get the MinIO URL
     ```
     oc get route minio -n velero
     ```
