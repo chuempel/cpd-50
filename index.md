@@ -214,8 +214,34 @@ export COMPONENTS=dataproduct
 ```
 
 
-# 3. Preparing the Single-Node OpenShift cluster (SNO)
-### Step 3.1 - Change the Kubelet config
+# 3. Preparing the OpenShift cluster
+
+### Step 3.1 - Source the CPD CLI environment variables from the cpd_vars.sh file.
+```
+source ./cpd_vars.sh
+```
+
+### Step 3.2 - Run the cpd-cli manage login command.
+Note, that when running the command for the first time this will take some time to complete, as the olm-utils container image will be downloaded from the Internet.
+```
+./cpd-cli manage login-to-ocp --token=${OCP_TOKEN} --server=${OCP_URL}
+```
+
+Successful completion of the login command would look like the following.
+```
+[...]
+Using project "default" on server "https://api.xxx.yyy.ibm.com:6443".
+[SUCCESS] 2024-07-03T09:41:31.665896Z You may find output and logs in the /root/install/cpd-cli-workspace/olm-utils-workspace/work directory.
+[SUCCESS] 2024-07-03T09:41:31.665924Z The login-to-ocp command ran successfully.
+```
+
+### Step 3.3.1 Change the Kubelet config (for non-Single-Node OpenShift clusters)
+Run the cpd-cli manage apply-db2-kubelet command.
+```
+./cpd-cli manage apply-db2-kubelet
+```
+
+### Step 3.3.2 - Change the Kubelet config (only for Single-Node OpenShift)
 In the Kubelet config, change CRI-O settings (pids limit), increase the maximal numbers of the pods on the SNO to 500 and enable unsafe systctls for the Db2 services.
 ```
 cat <<EOF | oc apply -f -
@@ -242,7 +268,8 @@ EOF
 kubeletconfig.machineconfiguration.openshift.io/cp4d-sno-config created
 ```
 
-Your OCP SNO cluster will be rebooted to apply the changes. Verify that the changes have been applied.
+### Step 3.4 - Watch the Kubelet changes being applied
+Your OCP cluster will be rebooted to apply the changes. Verify that the changes have been applied.
 ```
 watch -n 10 oc get mcp
 ```
@@ -259,26 +286,11 @@ worker   rendered-worker-27aaddbc27c6cfe2d9d06101db8810a1   True      False     
 5h31m
 ```
 
-### Step 3.2 - Source the CPD CLI environment variables from the cpd_vars.sh file.
-```
-source ./cpd_vars.sh
-```
 
-### Step 3.3 - Run the cpd-cli manage login command.
-Note, that when running the command for the first time this will take some time to complete, as the olm-utils container image will be downloaded from the Internet.
-```
-./cpd-cli manage login-to-ocp --token=${OCP_TOKEN} --server=${OCP_URL}
-```
 
-Successful completion of the login command would look like the following.
-```
-[...]
-Using project "default" on server "https://api.xxx.yyy.ibm.com:6443".
-[SUCCESS] 2024-07-03T09:41:31.665896Z You may find output and logs in the /root/install/cpd-cli-workspace/olm-utils-workspace/work directory.
-[SUCCESS] 2024-07-03T09:41:31.665924Z The login-to-ocp command ran successfully.
-```
 
-### Step 3.4 - Setup NFS provisioner (optional)
+
+### Step 3.5 - Setup NFS provisioner (optional)
 ```
 oc new-project ${PROJECT_NFS_PROVISIONER}
 ```
