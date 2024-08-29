@@ -860,7 +860,7 @@ Assumes that:
 - you can pull images from Dockerhub
 - you have a storage class nfs-storage-provisioner
 
-## Step 7.1 Sample Object Store using MinIO
+### Step 7.1 Sample Object Store using MinIO
 
 For testing purposes, steps are shown to install a local MinIO server, which is an
 open-source object store.
@@ -957,7 +957,7 @@ Create two persistent volumes and update the deployment. Change the storage clas
           --type=persistentVolumeClaim --claim-name="minio-storage-pvc" -n velero
         ```
 
-## Step 7.5 Set resource limits for the minio deployment.
+### Step 7.5 Set resource limits for the minio deployment.
     ```
     oc set resources deployment minio -n velero --requests=cpu=500m,memory=256Mi --limits=cpu=1,memory=1Gi
     ```
