@@ -980,7 +980,11 @@ References:
 ```
 cpd-cli health storage-validation \
 --param param.yml
-```  
+```
+## 9. Configuring LDAP
+
+### 9.1 Connecting to your identity provider
+- https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=users-connecting-your-identity-provider  
 
 
 # END OF DOCUMENT
