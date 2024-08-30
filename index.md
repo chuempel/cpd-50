@@ -912,18 +912,18 @@ Create config PVC
    ```
 
    ```
-        apiVersion: v1
-        kind: PersistentVolumeClaim
-        metadata:
-          namespace: velero
-          name: minio-config-pvc
-        spec:
-          accessModes:
-            - ReadWriteMany
-          resources:
-            requests:
-              storage: 1Gi
-          storageClassName: managed-nfs-storage
+   apiVersion: v1
+   kind: PersistentVolumeClaim
+   metadata:
+     namespace: velero
+     name: minio-config-pvc
+   spec:
+     accessModes:
+       - ReadWriteMany
+     resources:
+       requests:
+         storage: 1Gi
+     storageClassName: managed-nfs-storage
     ```
     2.  Create storage PVC
 
