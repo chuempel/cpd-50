@@ -906,12 +906,12 @@ open-source object store.
 ### Step 7.4 Creating PVCs for MinIO
 Create two persistent volumes and update the deployment. Change the storage class and size as needed.
 
-    1.  Create config PVC
+Create config PVC
+   ```
+   oc apply -f minio-config-pvc.yaml
+   ```
 
-        ```
-        oc apply -f minio-config-pvc.yaml
-        ```
-        ```
+   ```
         apiVersion: v1
         kind: PersistentVolumeClaim
         metadata:
@@ -924,7 +924,7 @@ Create two persistent volumes and update the deployment. Change the storage clas
             requests:
               storage: 1Gi
           storageClassName: managed-nfs-storage
-        ```
+    ```
     2.  Create storage PVC
 
         ```
