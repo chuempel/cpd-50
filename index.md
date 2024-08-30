@@ -985,7 +985,7 @@ Create config PVC
 ### Step 7.9 Go to the MinIO web UI and create a bucket called "velero"
 
 
-### Step 7.xx - Create Ingress for Minio
+### Step 7.10 - Create Ingress for Minio
 Create the following Ingress and save the YAML in the minio-ingress.yaml file
 ```
 apiVersion: networking.k8s.io/v1
