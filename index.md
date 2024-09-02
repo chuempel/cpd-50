@@ -1043,6 +1043,25 @@ cpd-cli health storage-validation \
 ### 9.1 Connecting to your identity provider
 - https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=users-connecting-your-identity-provider  
 
+## 10. Setting up HTTP proxy
+
+### 10.1 Install RSI webhook
+```
+./cpd-cli manage install-rsi \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
+```
+
+### 10.2 Enable RSI webhook
+```
+./cpd-cli manage install-rsi \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
+```
+
+### 10.3 
+
+
+
+
 
 # END OF DOCUMENT
 
