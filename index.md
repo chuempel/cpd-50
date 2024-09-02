@@ -1079,5 +1079,20 @@ export PROXY_PORT=<port of proxy host>
 --proxy_port=${PROXY_PORT}
 ```
 
+### 10.5 Enable proxy
+```
+./cpd-cli manage enable-proxy \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
+```
+
+### 10.6 Wait for the pods to restart
+```
+oc get deployment,replicaset,job,cronjob,statefulset,replicationcontroller \
+-n=${PROJECT_CPD_INST_OPERANDS} \
+-o=json \
+| jq '.items[].metadata|select(.annotations."resourcespecinjector.ibm.com/injection_status"=="patch in progress")|.name' \
+| wc -l
+```
+
 # END OF DOCUMENT
 
