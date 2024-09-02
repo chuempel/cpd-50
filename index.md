@@ -1035,26 +1035,21 @@ References:
 cpd-cli health storage-validation \
 --param param.yml
 ```
-## 9. Configuring LDAP
+## 9. Setting up HTTP proxy
 
-### 9.1 Connecting to your identity provider
-- https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=users-connecting-your-identity-provider  
-
-## 10. Setting up HTTP proxy
-
-### 10.1 Install RSI webhook
+### 9.1 Install RSI webhook
 ```
 ./cpd-cli manage install-rsi \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
 ```
 
-### 10.2 Enable RSI webhook
+### 9.2 Enable RSI webhook
 ```
 ./cpd-cli manage enable-rsi \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
 ```
 
-### 10.3 Check RSI webhook is running
+### 9.3 Check RSI webhook is running
 ```
 oc get mutatingwebhookconfiguration -n ${PROJECT_CPD_INST_OPERANDS} | grep rsi-webhook-cfg
 ```
@@ -1063,7 +1058,7 @@ Output:
 rsi-webhook-cfg-cpd-instance                 1          7m35s
 ```
 
-### 10.4 Configure proxy
+### 9.4 Configure proxy
 ```
 export PROXY_HOST=<ip of proxy host>
 export PROXY_PORT=<port of proxy host>
@@ -1079,13 +1074,13 @@ export PROXY_PORT=<port of proxy host>
 --proxy_port=${PROXY_PORT}
 ```
 
-### 10.5 Enable proxy
+### 9.5 Enable proxy
 ```
 ./cpd-cli manage enable-proxy \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
 ```
 
-### 10.6 Wait for the pods to restart
+### 9.6 Wait for the pods to restart
 ```
 oc get deployment,replicaset,job,cronjob,statefulset,replicationcontroller \
 -n=${PROJECT_CPD_INST_OPERANDS} \
@@ -1096,6 +1091,11 @@ oc get deployment,replicaset,job,cronjob,statefulset,replicationcontroller \
 
 Wait for the command to return 0. Do not complete any tasks in Cloud Pak for Data before the pods are restarted.
 If any pods are stuck, delete the pods to restart them.
+
+## 10. Configuring OIDC / LDAP
+
+### 10.1 Connecting to your identity provider
+- https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=users-connecting-your-identity-provider  
 
 
 
