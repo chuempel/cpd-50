@@ -1050,7 +1050,7 @@ cpd-cli health storage-validation \
 
 ### 10.2 Enable RSI webhook
 ```
-./cpd-cli manage install-rsi \
+./cpd-cli manage enable-rsi-rsi \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
 ```
 
