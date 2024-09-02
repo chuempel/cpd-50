@@ -1094,5 +1094,10 @@ oc get deployment,replicaset,job,cronjob,statefulset,replicationcontroller \
 | wc -l
 ```
 
+Wait for the command to return 0. Do not complete any tasks in Cloud Pak for Data before the pods are restarted.
+If any pods are stuck, delete the pods to restart them.
+
+
+
 # END OF DOCUMENT
 
