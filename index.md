@@ -907,84 +907,81 @@ open-source object store.
 Create two persistent volumes and update the deployment. Change the storage class and size as needed.
 
 Create config PVC
-   ```
-   oc apply -f minio-config-pvc.yaml
-   ```
+```
+oc apply -f minio-config-pvc.yaml
+```
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: velero
+  name: minio-config-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+      storageClassName: managed-nfs-storage
+```
 
-   ```
-   apiVersion: v1
-   kind: PersistentVolumeClaim
-   metadata:
-     namespace: velero
-     name: minio-config-pvc
-   spec:
-     accessModes:
-       - ReadWriteMany
-     resources:
-       requests:
-         storage: 1Gi
-     storageClassName: managed-nfs-storage
-    ```
+Create storage PVC
+```
+oc apply -f minio-storage-pvc.yaml
+```
 
-2.  Create storage PVC
-   ```
-   oc apply -f minio-storage-pvc.yaml
-   ```
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: velero
+  name: minio-storage-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 400Gi
+      storageClassName: managed-nfs-storage
+```
 
-   ```
-   apiVersion: v1
-   kind: PersistentVolumeClaim
-   metadata:
-     namespace: velero
-     name: minio-storage-pvc
-   spec:
-     accessModes:
-       - ReadWriteMany
-     resources:
-       requests:
-         storage: 400Gi
-         storageClassName: managed-nfs-storage
-   ```
-
-  3.  Set config volume
-  ```
-  oc set volume deployment.apps/minio --add --overwrite --name=config --mount-path=/config \
-    --type=persistentVolumeClaim --claim-name="minio-config-pvc" -n velero
-  ```
+Set config volume
+```
+oc set volume deployment.apps/minio --add --overwrite --name=config --mount-path=/config \
+  --type=persistentVolumeClaim --claim-name="minio-config-pvc" -n velero
+```
     
-    4.  Set storage volume
-        ```
-        oc set volume deployment.apps/minio --add --overwrite --name=storage --mount-path=/storage \
-          --type=persistentVolumeClaim --claim-name="minio-storage-pvc" -n velero
-        ```
+Set storage volume
+```
+oc set volume deployment.apps/minio --add --overwrite --name=storage --mount-path=/storage \
+   --type=persistentVolumeClaim --claim-name="minio-storage-pvc" -n velero
+```
 
 ### Step 7.5 Set resource limits for the minio deployment.
-    ```
-    oc set resources deployment minio -n velero --requests=cpu=500m,memory=256Mi --limits=cpu=1,memory=1Gi
-    ```
+```
+oc set resources deployment minio -n velero --requests=cpu=500m,memory=256Mi --limits=cpu=1,memory=1Gi
+```
 
 ### Step 7.6 Check that the MinIO pods are up and running.
-    ```
-    oc get pods -n velero
-    ```
+```
+oc get pods -n velero
+```
+
 ### Step 7.7 Expose the minio service
-    ```
-    oc expose svc minio -n velero
-    ```
+```
+oc expose svc minio -n velero
+```
+
 ### Step 7.8 Get the MinIO URL
-    ```
-    oc get route minio -n velero
-    ```
-    Example:
-
+```
+oc get route minio -n velero
+```
+Example:
     http://minio-velero.apps.mycluster.cp.fyre.ibm.com
-
     User/password
-
     minio/minio123
 
 ### Step 7.9 Go to the MinIO web UI and create a bucket called "velero"
-
 
 ### Step 7.10 - Create Ingress for Minio
 Create the following Ingress and save the YAML in the minio-ingress.yaml file
@@ -1012,8 +1009,7 @@ spec:
  ```
  oc apply -f minio-ingress.yaml
  ```
- 
- 
+  
 # 8. Storage validation
 Perform a health check on storage validation.
 
