@@ -1054,7 +1054,30 @@ cpd-cli health storage-validation \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
 ```
 
-### 10.3 
+### 10.3 Check RSI webhook is running
+```
+oc get mutatingwebhookconfiguration -n ${PROJECT_CPD_INST_OPERANDS} | grep rsi-webhook-cfg
+```
+Output:
+```
+rsi-webhook-cfg-cpd-instance                 1          7m35s
+```
+
+### 10.4 Configure proxy
+```
+export PROXY_HOST=<ip of proxy host>
+export PROXY_PORT=<port of proxy host>
+# for example:
+# export PROXY_HOST=1.2.3.4
+# export PROXY_PORT=8080 
+```
+
+```
+./cpd-cli manage create-proxy-config \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+--proxy_host=${PROXY_HOST} \
+--proxy_port=${PROXY_PORT}
+```
 
 # END OF DOCUMENT
 
