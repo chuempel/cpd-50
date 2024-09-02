@@ -925,25 +925,26 @@ Create config PVC
          storage: 1Gi
      storageClassName: managed-nfs-storage
     ```
-    2.  Create storage PVC
 
-        ```
-        oc apply -f minio-storage-pvc.yaml
-        ```
-        ```
-        apiVersion: v1
-        kind: PersistentVolumeClaim
-        metadata:
-          namespace: velero
-          name: minio-storage-pvc
-        spec:
-          accessModes:
-            - ReadWriteMany
-          resources:
-            requests:
-              storage: 400Gi
-          storageClassName: managed-nfs-storage
-        ```
+2.  Create storage PVC
+   ```
+   oc apply -f minio-storage-pvc.yaml
+   ```
+
+   ```
+   apiVersion: v1
+   kind: PersistentVolumeClaim
+   metadata:
+     namespace: velero
+     name: minio-storage-pvc
+   spec:
+     accessModes:
+       - ReadWriteMany
+     resources:
+       requests:
+         storage: 400Gi
+         storageClassName: managed-nfs-storage
+   ```
 
     3.  Set config volume
         ```
@@ -1058,10 +1059,6 @@ cpd-cli health storage-validation \
 ```
 
 ### 10.3 
-
-
-
-
 
 # END OF DOCUMENT
 
