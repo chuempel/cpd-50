@@ -946,11 +946,11 @@ Create config PVC
          storageClassName: managed-nfs-storage
    ```
 
-    3.  Set config volume
-        ```
-        oc set volume deployment.apps/minio --add --overwrite --name=config --mount-path=/config \
-          --type=persistentVolumeClaim --claim-name="minio-config-pvc" -n velero
-        ```
+  3.  Set config volume
+  ```
+  oc set volume deployment.apps/minio --add --overwrite --name=config --mount-path=/config \
+    --type=persistentVolumeClaim --claim-name="minio-config-pvc" -n velero
+  ```
     
     4.  Set storage volume
         ```
