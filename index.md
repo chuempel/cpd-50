@@ -1092,10 +1092,10 @@ oc get deployment,replicaset,job,cronjob,statefulset,replicationcontroller \
 Wait for the command to return 0. Do not complete any tasks in Cloud Pak for Data before the pods are restarted.
 If any pods are stuck, delete the pods to restart them.
 
-## 10. Configuring OIDC / LDAP
-
-### 10.1 Connecting to your identity provider
-- https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=users-connecting-your-identity-provider  
+## 10. Configuring single sign-on using OpenID Connect (OIDC)
+- https://www.ibm.com/docs/en/cloud-paks/foundational-services/4.7?topic=users-configuring-single-sign-using-openid-connect
+  
+### 10.1 
 
 
 
