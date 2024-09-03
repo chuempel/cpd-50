@@ -1094,6 +1094,7 @@ If any pods are stuck, delete the pods to restart them.
 
 ## 10. Configuring single sign-on using OpenID Connect (OIDC)
 - https://www.ibm.com/docs/en/cloud-paks/foundational-services/4.7?topic=users-configuring-single-sign-using-openid-connect
+- https://www.ibm.com/docs/en/cloud-paks/foundational-services/4.8?topic=users-configuring-single-sign-using-openid-connect
   
 ### 10.1 
 
