@@ -818,6 +818,28 @@ zen-watchdog-pre-requisite-job-llzt7                              0/1     Comple
 zen-watcher-7984fd87d4-5hqwp                                      2/2     Running     0          23m
 ```
 
+### Step 4.10 Get CR Status
+```
+./cpd-cli manage get-cr-status \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
+```
+Output:
+```
+[INFO] Output the result in the below chart:
+Component        CR-kind              CR-name                 Namespace     Status     Version    Creationtimestamp     Reconciled-version       Operator-info
+---------------  -------------------  ----------------------  ------------  ---------  ---------  --------------------  -----------------------  -----------------------------------
+cpfs             CommonService        common-service          cpd-instance  Succeeded  N/A        2024-08-28T10:05:45Z  N/A                      N/A
+cpfs             CommonService        im-common-service       cpd-instance  Succeeded  N/A        2024-08-28T10:57:35Z  N/A                      N/A
+zen              ZenService           lite-cr                 cpd-instance  Completed  6.0.3      2024-08-28T10:57:55Z  6.0.3                    zen operator 6.0.3 build 11
+cpd_platform     Ibmcpd               ibmcpd-cr               cpd-instance  Completed  5.0.1      2024-08-28T10:56:08Z  5.0.1                    cpdPlatform operator 6.0.1 build 17
+ccs              CCS                  ccs-cr                  cpd-instance  Completed  9.1.0      2024-08-28T11:46:04Z  9.1.0                    175
+analyticsengine  AnalyticsEngine      analyticsengine-sample  cpd-instance  Completed  5.0.1      2024-08-28T12:18:07Z  5.0.1                    1110
+datarefinery     DataRefinery         datarefinery-cr         cpd-instance  Completed  9.1.0      2024-08-28T12:49:10Z  9.1.0                    157
+db2aaservice     Db2aaserviceService  db2aaservice-cr         cpd-instance  Completed  5.0.0      2024-08-28T13:07:33Z  5.0.0+11.5.9.0-cn1+2491  5.0.0+11.5.9.0-cn1+2491
+dataproduct      DataProduct          dataproduct-cr          cpd-instance  Completed  5.0.1      2024-08-28T11:45:48Z  N/A                      N/A
+ 
+The get_cr_status.py script ran successfully. End of the log.
+```
 # 5. Post-installation steps
 
 ### Step 5.1 - Retrieving the default CPD admin password
