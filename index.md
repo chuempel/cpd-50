@@ -1198,11 +1198,6 @@ oc get pods --namespace=${PROJECT_CPD_INST_OPERATORS}
 --upgrade=true
 ```
 
-## 11.2 Update the operators to 5.0.2
-
-## 11.3 Update the operands (CRs) to 5.0.2
-
-
 
 # END OF DOCUMENT
 
