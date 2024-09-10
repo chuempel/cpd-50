@@ -1118,7 +1118,15 @@ If any pods are stuck, delete the pods to restart them.
 - https://www.ibm.com/docs/en/cloud-paks/foundational-services/4.7?topic=users-configuring-single-sign-using-openid-connect
 - https://www.ibm.com/docs/en/cloud-paks/foundational-services/4.8?topic=users-configuring-single-sign-using-openid-connect
   
-### 10.1 
+### 10.1
+
+## 11. Upgrading to CPD 5.0.2
+
+## 11.1 Download CPD CLI 5.0.2 version
+
+## 11.2 Update the operators to 5.0.2
+
+## 11.3 Update the operands (CRs) to 5.0.2
 
 
 
