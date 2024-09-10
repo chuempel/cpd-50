@@ -1203,6 +1203,22 @@ oc get pods --namespace=${PROJECT_CPD_INST_OPERATORS}
 --upgrade=true
 ```
 
+## 11.8 Check the status of the CRs
+Confirm that the status of the operands is Completed:
+```
+./cpd-cli manage get-cr-status \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
+```
+
+## 11.9 Enable RSI cronjob
+```
+oc patch CronJob zen-rsi-evictor-cron-job \
+--namespace=${PROJECT_CPD_INST_OPERANDS} \
+--type=merge \
+--patch='{"spec":{"suspend": false}}'
+```
+
+
 
 # END OF DOCUMENT
 
