@@ -1123,6 +1123,16 @@ If any pods are stuck, delete the pods to restart them.
 ## 11. Upgrading to CPD 5.0.2
 
 ## 11.1 Download CPD CLI 5.0.2 version
+Download cpd-cli utility from github.com.
+
+```
+wget https://github.com/IBM/cpd-cli/releases/download/v14.0.1/cpd-cli-linux-EE-14.0.2.tgz
+tar -xzvf cpd-cli-linux-EE-14.0.2.tgz
+mv cpd-cli-linux-EE-14.0.2*/* .
+rm -rf cpd-cli-linux-EE-14.0.2*
+rm -f cpd-cli-linux-EE-14.0.2.tgz
+./cpd-cli version
+```
 
 ## 11.2 Update the operators to 5.0.2
 
