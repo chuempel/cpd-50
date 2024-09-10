@@ -1134,6 +1134,70 @@ rm -f cpd-cli-linux-EE-14.0.2.tgz
 ./cpd-cli version
 ```
 
+## 11.2 Edit the cpd_vars.sh file
+And set the VERSION=5.0.2 in the cpd_vars.sh file and source the updated cpd_vars.sh file.
+
+## 11.3 Upgrade the shared cluster components
+```
+./cpd-cli manage apply-cluster-components \
+--release=${VERSION} \
+--license_acceptance=true \
+--cert_manager_ns=${PROJECT_CERT_MANAGER} \
+--licensing_ns=${PROJECT_LICENSE_SERVICE}
+```
+## 11.4 Upgrade the RSI webhook
+
+```
+./cpd-cli manage install-rsi \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
+```
+
+```
+./cpd-cli manage enable-rsi \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
+```
+
+```
+oc patch CronJob zen-rsi-evictor-cron-job \
+--namespace=${PROJECT_CPD_INST_OPERANDS} \
+--type=merge \
+--patch='{"spec":{"suspend": true}}'
+```
+
+## 11.5 Upgrade foundational services
+```
+./cpd-cli manage setup-instance-topology \
+--release=${VERSION} \
+--cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+--license_acceptance=true \
+--block_storage_class=${STG_CLASS_BLOCK}
+```
+
+## 11.6 Upgrade the operators
+```
+./cpd-cli manage apply-olm \
+--release=${VERSION} \
+--cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
+--upgrade=true
+```
+
+```
+oc get pods --namespace=${PROJECT_CPD_INST_OPERATORS}
+```
+
+## 11.7 Upgrade the operands
+```
+./cpd-cli manage apply-cr \
+--release=${VERSION} \
+--cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+--components=${COMPONENTS} \
+--block_storage_class=${STG_CLASS_BLOCK} \
+--file_storage_class=${STG_CLASS_FILE} \
+--license_acceptance=true \
+--upgrade=true
+```
+
 ## 11.2 Update the operators to 5.0.2
 
 ## 11.3 Update the operands (CRs) to 5.0.2
