@@ -1126,7 +1126,7 @@ If any pods are stuck, delete the pods to restart them.
 Download cpd-cli utility from github.com.
 
 ```
-wget https://github.com/IBM/cpd-cli/releases/download/v14.0.1/cpd-cli-linux-EE-14.0.2.tgz
+wget https://github.com/IBM/cpd-cli/releases/download/v14.0.2/cpd-cli-linux-EE-14.0.2.tgz
 tar -xzvf cpd-cli-linux-EE-14.0.2.tgz
 mv cpd-cli-linux-EE-14.0.2*/* .
 rm -rf cpd-cli-linux-EE-14.0.2*
