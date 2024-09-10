@@ -1137,6 +1137,11 @@ rm -f cpd-cli-linux-EE-14.0.2.tgz
 ## 11.2 Edit the cpd_vars.sh file
 And set the VERSION=5.0.2 in the cpd_vars.sh file and source the updated cpd_vars.sh file.
 
+## 11.2.1 Login via cpd-cli
+```
+./cpd-cli manage login-to-ocp --token=${OCP_TOKEN} --server=${OCP_URL}
+```
+
 ## 11.3 Upgrade the shared cluster components
 ```
 ./cpd-cli manage apply-cluster-components \
