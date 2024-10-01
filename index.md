@@ -1114,11 +1114,12 @@ oc get deployment,replicaset,job,cronjob,statefulset,replicationcontroller \
 Wait for the command to return 0. Do not complete any tasks in Cloud Pak for Data before the pods are restarted.
 If any pods are stuck, delete the pods to restart them.
 
-## 10. Configuring single sign-on using OpenID Connect (OIDC)
+# 10. Configuring single sign-on using OpenID Connect (OIDC)
 - https://www.ibm.com/docs/en/cloud-paks/foundational-services/4.7?topic=users-configuring-single-sign-using-openid-connect
 - https://www.ibm.com/docs/en/cloud-paks/foundational-services/4.8?topic=users-configuring-single-sign-using-openid-connect
   
-### 10.1
+### 10.1 TBD
+TBD
 
 # 11. Upgrading to CPD 5.0.2
 
