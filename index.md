@@ -863,6 +863,11 @@ oc describe nodes | grep -e "cpu  " -e "memory  "
 oc debug node/master-1
 ```
 
+### Step 5.5 - Monitoring the pods of the CPD instance
+```
+watch -n 10 "oc get pods -n ${PROJECT_CPD_INST_OPERANDS} --sort-by=.status.startTime | tac"
+```
+
 # 6. Troubleshooting
 If you are experiencing problems with accessing the SNO cluster via oc login commands, for example getting an EOF error, it might help to reboot the SNO node.
 
