@@ -1120,9 +1120,9 @@ If any pods are stuck, delete the pods to restart them.
   
 ### 10.1
 
-## 11. Upgrading to CPD 5.0.2
+# 11. Upgrading to CPD 5.0.2
 
-## 11.1 Download CPD CLI 5.0.2 version
+### 11.1 Download CPD CLI 5.0.2 version
 Download cpd-cli utility from github.com.
 
 ```
@@ -1134,15 +1134,15 @@ rm -f cpd-cli-linux-EE-14.0.2.tgz
 ./cpd-cli version
 ```
 
-## 11.2 Edit the cpd_vars.sh file
+### 11.2 Edit the cpd_vars.sh file
 And set the VERSION=5.0.2 in the cpd_vars.sh file and source the updated cpd_vars.sh file.
 
-## 11.2.1 Login via cpd-cli
+### 11.2.1 Login via cpd-cli
 ```
 ./cpd-cli manage login-to-ocp --token=${OCP_TOKEN} --server=${OCP_URL}
 ```
 
-## 11.3 Upgrade the shared cluster components
+### 11.3 Upgrade the shared cluster components
 ```
 ./cpd-cli manage apply-cluster-components \
 --release=${VERSION} \
@@ -1150,7 +1150,7 @@ And set the VERSION=5.0.2 in the cpd_vars.sh file and source the updated cpd_var
 --cert_manager_ns=${PROJECT_CERT_MANAGER} \
 --licensing_ns=${PROJECT_LICENSE_SERVICE}
 ```
-## 11.4 Upgrade the RSI webhook
+### 11.4 Upgrade the RSI webhook
 
 ```
 ./cpd-cli manage install-rsi \
@@ -1169,7 +1169,7 @@ oc patch CronJob zen-rsi-evictor-cron-job \
 --patch='{"spec":{"suspend": true}}'
 ```
 
-## 11.5 Upgrade foundational services
+### 11.5 Upgrade foundational services
 ```
 ./cpd-cli manage setup-instance-topology \
 --release=${VERSION} \
@@ -1179,7 +1179,7 @@ oc patch CronJob zen-rsi-evictor-cron-job \
 --block_storage_class=${STG_CLASS_BLOCK}
 ```
 
-## 11.6 Upgrade the operators
+### 11.6 Upgrade the operators
 ```
 ./cpd-cli manage apply-olm \
 --release=${VERSION} \
@@ -1191,7 +1191,7 @@ oc patch CronJob zen-rsi-evictor-cron-job \
 oc get pods --namespace=${PROJECT_CPD_INST_OPERATORS}
 ```
 
-## 11.7 Upgrade the operands
+### 11.7 Upgrade the operands
 ```
 ./cpd-cli manage apply-cr \
 --release=${VERSION} \
@@ -1203,14 +1203,14 @@ oc get pods --namespace=${PROJECT_CPD_INST_OPERATORS}
 --upgrade=true
 ```
 
-## 11.8 Check the status of the CRs
+### 11.8 Check the status of the CRs
 Confirm that the status of the operands is Completed:
 ```
 ./cpd-cli manage get-cr-status \
 --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
 ```
 
-## 11.9 Enable RSI cronjob
+### 11.9 Enable RSI cronjob
 ```
 oc patch CronJob zen-rsi-evictor-cron-job \
 --namespace=${PROJECT_CPD_INST_OPERANDS} \
