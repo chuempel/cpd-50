@@ -1057,7 +1057,7 @@ References:
 cpd-cli health storage-validation \
 --param param.yml
 ```
-## 9. Setting up HTTP proxy
+# 9. Setting up HTTP proxy
 
 ### 9.1 Install RSI webhook
 ```
